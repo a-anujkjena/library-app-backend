@@ -8,13 +8,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var logger = require('morgan');
-var errorHandler = require('errorhandler');
 var util = require('util');
+var cors = require('cors')
 
 var app = express();
 var router = express.Router();
 
 app.set('port', process.env.PORT || 8986);
+app.use(cors())
 app.use(bodyParser.json({ limit: '15mb' }));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser('1a2b3c4d5e6f'));

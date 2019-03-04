@@ -12,5 +12,14 @@ module.exports = {
 		mysql(query, function(err, result) {
 			callback(err, result);
 		});
+    },
+    
+    getuser: function(callback) {
+		var query = {
+			sql: 'call get_userlist();'
+		};
+		mysql(query, function(err, result) {
+			callback(err, result);
+		});
 	}
 }

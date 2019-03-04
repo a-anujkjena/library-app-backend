@@ -18,7 +18,7 @@ module.exports = {
                     }
                     next(error);
                 } else {
-                    if(result[0] && result[0][0]) {
+                    if(result && result[0] && result[0][0]) {
                         if(result[0][0].status) {
                             let error = {
                                 status: 403,
@@ -27,7 +27,10 @@ module.exports = {
                             }
                             next(error);
                         } else {
+                            req.session.userid = result[0][0].id;
+                            req.session.role = result[0][0].role;
                             req.session.finaldata = result[0][0];
+                            console.log(JSON.stringify(req.session));
                             next();
                         }
                     } else {
@@ -47,6 +50,57 @@ module.exports = {
                 message: "Required Parameters are missing"
             }
             next(error);
+        }
+    },
+
+    getuser: function(req, res, next) {
+        usermodel.getuser(function(err, result){
+            if(err) {
+                let error = {
+                    status: 403,
+                    status_code: 0,
+                    message: err
+                }
+                next(error);
+            } else {
+                if(result && result[0] && result[0][0].status) {
+                    let error = {
+                        status: 403,
+                        status_code: 0,
+                        message: result[0][0].message
+                    }
+                    next(error);
+                } else {
+                    req.session.finaldata = result[0];
+                    next();
+                }
+            }
+        });
+    },
+ 
+    checkadmin: function(req, res, next) {
+        if( req.session.userid && req.session.role == 'admin') {
+            next();
+        } else {
+            let error = {
+                status: 401,
+                status_code: 0,
+                message: "User is not authorized for this resource"
+            }
+            next(error); 
+        }
+    },
+
+    checkuser: function(req, res, next) {
+        if(req.session.userid) {
+            next();
+        } else {
+            let error = {
+                status: 401,
+                status_code: 0,
+                message: "User is not authorized for this resource"
+            }
+            next(error); 
         }
     }
 }
