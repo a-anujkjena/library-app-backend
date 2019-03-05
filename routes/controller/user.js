@@ -19,11 +19,11 @@ module.exports = {
                     next(error);
                 } else {
                     if(result && result[0] && result[0][0]) {
-                        if(result[0][0].status) {
+                        if(result[0][0].State) {
                             let error = {
                                 status: 403,
                                 status_code: 0,
-                                message: result[0][0].message
+                                message: result[0][0].Message
                             }
                             next(error);
                         } else {
@@ -63,11 +63,11 @@ module.exports = {
                 }
                 next(error);
             } else {
-                if(result && result[0] && result[0][0].status) {
+                if(result && result[0] && result[0][0].State) {
                     let error = {
                         status: 403,
                         status_code: 0,
-                        message: result[0][0].message
+                        message: result[0][0].Message
                     }
                     next(error);
                 } else {

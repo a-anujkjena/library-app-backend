@@ -13,4 +13,6 @@ module.exports = function(app) {
     app.post('/v1/login',user.loginuser,view.normalview);
     app.get('/v1/userlist',user.getuser,view.normalview);
     app.get('/v1/booklist',book.getbook,view.normalview);
+    app.get('/v1/returnbook',book.returnbook,view.normalview);
+    app.post('/v1/bookcrud',book.bookcrud,view.normalview);
 }
